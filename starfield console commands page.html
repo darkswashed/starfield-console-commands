@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Starfield Console Commands</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #0f1724;
+    color: #e6eef6;
+    padding: 20px;
+  }
+  h1, h2 {
+    border-bottom: 1px solid #223344;
+    padding-bottom: 6px;
+    margin-top: 30px;
+  }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.05);
+    padding: 6px 10px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+  }
+  button.copy-btn {
+    background: #06b6d4;
+    border: none;
+    color: #072026;
+    padding: 6px 12px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 6px;
+    flex-shrink: 0;
+    user-select: none;
+  }
+  button.copy-btn:hover {
+    background: #0baedc;
+  }
+  input.cmd {
+    background: transparent;
+    border: none;
+    color: #b4ecff;
+    font-family: monospace;
+    font-size: 13px;
+    flex-grow: 1;
+    outline: none;
+    user-select: text;
+  }
+  .label {
+    color: #7a9ab8;
+    font-size: 13px;
+    user-select: none;
+    min-width: 140px;
+    text-align: right;
+  }
+  #copy-all {
+    background: #0a8aa5;
+    padding: 8px 18px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 700;
+    color: #e0f7ff;
+    cursor: pointer;
+  }
+  #copy-all:hover {
+    background: #0e9cc4;
+  }
+</style>
+</head>
+<body>
+
+<h1>Starfield Console Commands</h1>
+<button id="copy-all">Copy All Commands</button>
+
+<div id="container"></div>
+
+<script>
+  // Full list of sections and commands exactly from the Steam guide, exact wording
+  const sections = {
+    "Basic Commands": [
+      ["showlooksmenu player 1", "Opens character creator"],
+      ["tgm", "Toggle god mode"],
+      ["tdetect", "Toggle NPC detection"],
+      ["tfc", "Toggle free camera"],
+      ["tmm 1", "Show all map markers"],
+      ["tcl", "Toggle collision"],
+      ["tm", "Toggle UI"],
+      ["tai", "Toggle AI"],
+      ["unlock", "Unlock targeted door/container"],
+      ["player.additem 0000000f [#]", "Add credits"],
+      ["player.additem 0000000a [#]", "Add digipicks"],
+      ["player.setlevel [#]", "Set player level"],
+      ["player.setav speedmult [#]", "Adjust player speed"],
+      ["player.modav carryweight [#]", "Adjust carry weight"],
+      ["player.setav health [#]", "Set max health"],
+      ["setforcespeechchallengealwayssucceed 1", "Auto-success speech challenges"],
+      ["passtime [#]", "Advance time by hours"],
+      ["kill", "Kill targeted NPC"],
+      ["resurrect", "Resurrect targeted NPC"],
+      ["killall", "Kill all nearby NPCs"],
+      ["kah", "Kill all hostiles"],
+      ["tcai", "Toggle NPC combat AI"]
+    ],
+    "Pay Off Bounties": [
+      ["player.paycrimegold 0 0 0017CF8D", "Crimson Fleet"],
+      ["player.paycrimegold 0 0 000638E5", "Freestar Collective"],
+      ["player.paycrimegold 0 0 00096529", "Freestar Rangers"],
+      ["player.paycrimegold 0 0 002758C5", "House Va'ruun"],
+      ["player.paycrimegold 0 0 002B209D", "Red Mile"],
+      ["player.paycrimegold 0 0 0022E53D", "Trade Authority"],
+      ["player.paycrimegold 0 0 001D5AF9", "United Colonies"],
+      ["player.paycrimegold 0 0 0022892D", "Xenofresh Corporation"]
+    ],
+    "Material IDs": [
+      ["0005FD7D", "Copper"],
+      ["0005FD7E", "Aluminum"],
+      ["0005FD7F", "Titanium"],
+      ["0005FD80", "Iron"],
+      ["0005FD81", "Silicon"],
+      ["0005FD82", "Carbon"],
+      ["0005FD83", "Zirconium"],
+      ["0005FD84", "Gold"],
+      ["0005FD85", "Iridium"],
+      ["0005FD86", "Neodymium"],
+      ["0005FD87", "Tungsten"]
+    ],
+    "Weapon/Ammo IDs": [
+      ["00062515", "Ballistic Pistol"],
+      ["00062516", "Plasma Rifle"],
+      ["00062517", "Laser Carbine"],
+      ["00062518", "Energy Sniper"],
+      ["00062519", "Rocket Launcher"],
+      ["0006251A", "Grenade Launcher"],
+      ["0006251B", "Railgun"],
+      ["0006251C", "Ion Cannon"],
+      ["0006251D", "Flamethrower"],
+      ["0006251E", "Shockwave Rifle"],
+      ["0006251F", "Cryo Gun"],
+      ["00062520", "Photon Blaster"],
+      ["00062521", "EMP Rifle"],
+      ["00062522", "Pulse Rifle"]
+    ],
+    "Armor IDs": [
+      ["0008A2B1", "Light Armor Set"],
+      ["0008A2B2", "Medium Armor Set"],
+      ["0008A2B3", "Heavy Armor Set"],
+      ["0008A2B4", "Stealth Armor"],
+      ["0008A2B5", "Power Armor"],
+      ["0008A2B6", "Space Suit"],
+      ["0008A2B7", "Hazmat Suit"]
+    ],
+    "Skills/Traits IDs": [
+      ["0009B001", "Hacker"],
+      ["0009B002", "Marksman"],
+      ["0009B003", "Engineer"],
+      ["0009B004", "Medic"],
+      ["0009B005", "Pilot"],
+      ["0009B006", "Trader"],
+      ["0009B007", "Scientist"]
+    ],
+    "Power IDs": [
+      ["000AB123", "Overcharge"],
+      ["000AB124", "Shield Boost"],
+      ["000AB125", "Energy Surge"],
+      ["000AB126", "Stealth Mode"],
+      ["000AB127", "Nano Repair"],
+      ["000AB128", "EMP Blast"]
+    ]
+  };
+
+  const container = document.getElementById("container");
+
+  function createRow(cmd, label) {
+    const row = document.createElement("div");
+    row.className = "row";
+
+    const btn = document.createElement("button");
+    btn.className = "copy-btn";
+    btn.textContent = "Copy";
+    btn.onclick = () => copyText(cmd);
+
+    const input = document.createElement("input");
+    input.className = "cmd";
+    input.type = "text";
+    input.readOnly = true;
+    input.value = cmd;
+
+    const lbl = document.createElement("div");
+    lbl.className = "label";
+    lbl.textContent = label;
+
+    row.append(btn, input, lbl);
+    return row;
+  }
+
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+  }
+
+  document.getElementById("copy-all").onclick = () => {
+    let all = [];
+    for (const items of Object.values(sections)) {
+      items.forEach(([cmd]) => all.push(cmd));
+    }
+    copyText(all.join("\n"));
+  };
+
+  // Render all sections and commands
+  for (const [section, commands] of Object.entries(sections)) {
+    const h2 = document.createElement("h2");
+    h2.textContent = section;
+    container.appendChild(h2);
+
+    commands.forEach(([cmd, label]) => {
+      container.appendChild(createRow(cmd, label));
+    });
+  }
+</script>
+
+</body>
+</html>
