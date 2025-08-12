@@ -16,15 +16,20 @@
     padding-bottom: 6px;
     margin-top: 30px;
   }
+  
   .row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    background: rgba(255,255,255,0.05);
-    padding: 6px 10px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-  }
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.05);
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  transition: background 0.18s;
+}
+.row:hover {
+  background: rgba(255,255,255,0.13);
+}
   button.copy-btn {
     background: #06b6d4;
     border: none;
@@ -35,756 +40,990 @@
     border-radius: 6px;
     flex-shrink: 0;
     user-select: none;
+    transition: background 0.2s;
+    position: relative;
   }
   button.copy-btn:hover {
     background: #0baedc;
   }
   input.cmd {
-  background: transparent;
-  border: none;
-  color: #b4ecff;
-  font-family: monospace;
-  font-size: 13px;
-  flex: 0 0 280px; /* give it a default width */
-  outline: none;
-  user-select: text;
-}
-
-
-.label {
-  color: #7a9ab8;
-  font-size: 13px;
-  user-select: none;
-- min-width: 150px;
-- text-align: right;
-+ margin-left: 10px;
-+ text-align: left;
-  flex-shrink: 0;
-}
-
- 
-  #copy-all {
-    background: #0a8aa5;
-    padding: 8px 18px;
-    margin-bottom: 20px;
-    border-radius: 8px;
+    background: transparent;
     border: none;
-    font-weight: 700;
-    color: #e0f7ff;
-    cursor: pointer;
+    color: #b4ecff;
+    font-family: monospace;
+    font-size: 13px;
+    flex: 0 0 280px;
+    outline: none;
+    user-select: text;
   }
-  #copy-all:hover {
+  .label {
+    color: #7a9ab8;
+    font-size: 13px;
+    user-select: none;
+    margin-left: 10px;
+    text-align: left;
+    flex-shrink: 0;
+  }
+  #nav-sections {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    background: #142035;
+    padding: 14px 10px 10px 10px;
+    border-radius: 10px;
+    margin-bottom: 26px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  #nav-sections a {
+    color: #06b6d4;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 4px 12px;
+    border-radius: 5px;
+    transition: background 0.2s;
+    font-size: 15px;
+  }
+  #nav-sections a:hover, #nav-sections a.active {
     background: #0e9cc4;
+    color: #fff;
   }
+  #back-to-top {
+    display: none;
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    background: #06b6d4;
+    color: #072026;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 99;
+    box-shadow: 0 2px 10px 0 #0006;
+    transition: background 0.2s;
+  }
+  #back-to-top:hover {
+    background: #0baedc;
+  }
+  /* Notification styles */
+  #copy-notification {
+    position: fixed;
+    top: 32px;
+    right: 32px;
+    background: #06b6d4;
+    color: #072026;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: bold;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 2px 12px 0 #0008;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+  #copy-notification.show {
+    display: block;
+    opacity: 1;
+  }
+  #media-section {
+  display: flex;
+  gap: 32px;
+  background: #142035;
+  border-radius: 10px;
+  padding: 24px 16px;
+  margin-bottom: 32px;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+.media-embed-container {
+  flex: 1 1 360px;
+  min-width: 320px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-bottom: 10px;
+}
+.media-embed-header {
+  color: #06b6d4;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+
+.media-embed-controls {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.media-embed-controls input[type="text"] {
+  flex: 1 1 0;
+  padding: 6px 10px;
+  border: 1px solid #223344;
+  border-radius: 5px;
+  background: #1c2b42;
+  color: #e6eef6;
+  font-size: 14px;
+  outline: none;
+}
+.media-embed-controls button {
+  background: #06b6d4;
+  color: #072026;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.media-embed-controls button:hover {
+  background: #0baedc;
+}
+.media-notes-container {
+  flex: 2 1 370px;
+  min-width: 260px;
+  max-width: 100%;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.media-notes-header {
+  color: #06b6d4;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+#media-notes {
+  width: 95%;
+  min-height: 110px;
+  background: #0f1724;
+  color: #e6eef6;
+  border: 1px solid #223344;
+  border-radius: 8px;
+  padding: 12px 10px;
+  font-size: 15px;
+  resize: vertical;
+  margin-bottom: 0;
+  font-family: inherit;
+  transition: background 0.18s, border 0.18s;
+}
+#media-notes:focus {
+  border-color: #06b6d4;
+  background: #16233a;
+}
+.media-notes-preview {
+  margin-top: 10px;
+  padding: 12px 10px;
+  background: #12233a;
+  border-radius: 8px;
+  border: 1px solid #223344;
+  color: #e6eef6;
+  font-size: 15px;
+  min-height: 44px;
+  font-family: inherit;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.fixed-iframe-wrap {
+  width: 100%;
+  max-width: 700px;
+  aspect-ratio: 16/9;
+  background: #222c3a;
+  border-radius: 8px;
+  overflow: hidden;
+  min-width: 320px;
+  min-height: 180px;
+  max-height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fixed-iframe-wrap iframe {
+  width: 100%;
+  height: 100%;
+  min-width: 320px;
+  min-height: 180px;
+  max-width: 700px;
+  max-height: 400px;
+  border: none;
+  background: #000;
+  display: block;
+}
+@media (max-width: 800px) {
+  .fixed-iframe-wrap, .fixed-iframe-wrap iframe {
+    max-width: 100vw;
+    max-height: 40vw;
+    min-width: 0;
+    min-height: 0;
+  }
+}
 </style>
 </head>
 <body>
 
 <h1>Starfield Console Commands</h1>
-<button id="copy-all">Copy All Commands</button>
+<nav id="nav-sections"></nav>
+
+<section id="media-section">
+  <div class="media-embed-container">
+    <div class="media-embed-header">Tutorial Video</div>
+    <div class="fixed-iframe-wrap">
+      <iframe id="youtube-iframe"
+              src="https://www.youtube.com/embed/SbVIE-TErA8"
+              allowfullscreen
+              title="YouTube embed"></iframe>
+    </div>
+  </div>
+  <div class="media-notes-container">
+    <div class="media-notes-header">Notes</div>
+    <textarea id="media-notes" placeholder="Write your notes here..."></textarea>
+    <div class="media-notes-preview" id="media-notes-preview"></div>
+  </div>
+</section>
 
 <div id="container"></div>
+<button id="back-to-top" title="Back to top">&#8679;</button>
+<div id="copy-notification">Command copied!</div>
 
 <script>
-  // Full list of sections and commands exactly from the Steam guide, exact wording
-  const sections = {
-    "Basic Commands": [
-      ["showlooksmenu player 1", "Opens character creator"],
-      ["tgm", "Toggle god mode"],
-      ["tdetect", "Toggle NPC detection"],
-      ["tfc", "Toggle free camera"],
-      ["tmm 1", "Show all map markers"],
-      ["tcl", "Toggle collision"],
-      ["tm", "Toggle UI"],
-      ["tai", "Toggle AI"],
-      ["unlock", "Unlock targeted door/container"],
-      ["player.additem 0000000f [#]", "Add credits"],
-      ["player.additem 0000000a [#]", "Add digipicks"],
-      ["player.setlevel [#]", "Set player level"],
-      ["player.setav speedmult [#]", "Adjust player speed"],
-      ["player.modav carryweight [#]", "Adjust carry weight"],
-      ["player.setav health [#]", "Set max health"],
-      ["setforcespeechchallengealwayssucceed 1", "Auto-success speech challenges"],
-      ["passtime [#]", "Advance time by hours"],
-      ["kill", "Kill targeted NPC"],
-      ["resurrect", "Resurrect targeted NPC"],
-      ["killall", "Kill all nearby NPCs"],
-      ["kah", "Kill all hostiles"],
-      ["tcai", "Toggle NPC combat AI"]
-    ],
-    "Pay Off Bounties": [
-      ["player.paycrimegold 0 0 0017CF8D", "Crimson Fleet"],
-      ["player.paycrimegold 0 0 000638E5", "Freestar Collective"],
-      ["player.paycrimegold 0 0 00096529", "Freestar Rangers"],
-      ["player.paycrimegold 0 0 002758C5", "House Va'ruun"],
-      ["player.paycrimegold 0 0 002B209D", "Red Mile"],
-      ["player.paycrimegold 0 0 0022E53D", "Trade Authority"],
-      ["player.paycrimegold 0 0 0017CF8D", "Neon/Ryujin Industries"],
-	  ["player.paycrimegold 0 0 001D5AF9", "United Colonies"],
-      ["player.paycrimegold 0 0 0022892D", "Xenofresh Corporation"]
-    ],
-    "Material IDs": [
-  ["player.additem 00246B6A 100", "Adaptive Frame"],
-  ["player.additem 000055B1 100", "Adhesive"],
-  ["player.additem 00202F5A 100", "Aldumite Drilling Rig"],
-  ["player.additem 000C1F57 100", "Alien Genetic Material"],
-  ["player.additem 00005570 100", "Alkanes"],
-  ["player.additem 0000557D 100", "Aluminum"],
-  ["player.additem 000055CD 100", "Amino Acids"],
-  ["player.additem 000055B1 100", "Analgesic"],
-  ["player.additem 002F4436 100", "Antibiotics"],
-  ["player.additem 000055AB 100", "Antimicrobial"],
-  ["player.additem 0000557B 100", "Antimony"],
-  ["player.additem 00005588 100", "Argon"],
-  ["player.additem 000055B8 100", "Aromatic"],
-  ["player.additem 002C5884 100", "Aurora"],
-  ["player.additem 00246B7C 100", "Austinitic Manifold"],
-  ["player.additem 002A5024 100", "Battlestim"],
-  ["player.additem 00005585 100", "Benzene"],
-  ["player.additem 000057D9 100", "Beryllium"],
-  ["player.additem 000055B2 100", "Biosuppressant"],
-  ["player.additem 00122EA8 100", "Black Hole Heart"],
-  ["player.additem 000788D6 100", "Caelumite"],
-  ["player.additem 000057DF 100", "Caesium"],
-  ["player.additem 00005586 100", "Carboxylic Acids"],
-  ["player.additem 0000557C 100", "Clorine"],
-  ["player.additem 0000557E 100", "Chlorosilanes"],
-  ["player.additem 00005575 100", "Cobalt"],
-  ["player.additem 00246B64 100", "Comm Relay"],
-  ["player.additem 00246B7B 100", "Control Rod"],
-  ["player.additem 00005576 100", "Copper"],
-  ["player.additem 000055A8 100", "Cosmetic"],
-  ["player.additem 0029A85E 100", "CQB-X"],
-  ["player.additem 0020A02F 100", "Drilling Rig"],
-  ["player.additem 00122EB6 100", "Dwarf Star Heart"],
-  ["player.additem 00005569 100", "Dysprosium"],
-  ["player.additem 002A9DE8 100", "Emergency Kit"],
-  ["player.additem 000057E1 100", "Europium"],
-  ["player.additem 000055AF 100", "Fiber"],
-  ["player.additem 00260DF0 100", "Fiber Root"],
-  ["player.additem 0024F5C3 100", "Fiber Tissue"],
-  ["player.additem 00005577 100", "Flourine"],
-  ["player.additem 00005579 100", "Gold"],
-  ["player.additem 0029CAD9 100", "Heart+"],
-  ["player.additem 0029F405 100", "Hallucinogen"],
-  ["player.additem 0000558E 100", "Helium-3"],
-  ["player.additem 000055AA 100", "High-Tensile Spidroin"],
-  ["player.additem 002C5883 100", "Hippolyta"],
-  ["player.additem 0029F40D 100", "Hypercatalyst"],
-  ["player.additem 000055B3 100", "Immunostimulant"],
-  ["player.additem 0004BA37 100", "Indicite"],
-  ["player.additem 00203EB4 100", "Indicite Wafer"],
-  ["player.additem 0029A85C 100", "Infantry Alpha"],
-  ["player.additem 0000557A 100", "Ionic Liquids"],
-  ["player.additem 0000558A 100", "Iridium"],
-  ["player.additem 0000556E 100", "Iron"],
-  ["player.additem 00246B77 100", "Isocentered Magnet"],
-  ["player.additem 00246B76 100", "Isotopic Coolant"],
-  ["player.additem 00005568 100", "Lead"],
-  ["player.additem 0000557F 100", "Lithium"],
-  ["player.additem 000055BA 100", "Lubricant"],
-  ["player.additem 0000559E 100", "Luxury Textile"],
-  ["player.additem 00246B70 100", "Mag Pressure Tank"],
-  ["player.additem 000055B0 100", "Membrane"],
-  ["player.additem 0027C4A1 100", "Mercury"],
-  ["player.additem 0029F3FC 100", "Metabolic Agent"],
-  ["player.additem 00246B5F 100", "Microsecond Regulator"],
-  ["player.additem 00246B75 100", "Molecular Sieve"],
-  ["player.additem 00246B74 100", "Monopropellant"],
-  ["player.additem 00005580 100", "Neodymium"],
-  ["player.additem 00005587 100", "Neon"],
-  ["player.additem 00005572 100", "Nickel"],
-  ["player.additem 00246B79 100", "Nuclear Fuel Rod"],
-  ["player.additem 000777FD 100", "Nutrient"],
-  ["player.additem 0000557A 100", "Ornamental Material"],
-  ["player.additem 00005574 100", "Palladium"],
-  ["player.additem 00246B73 100", "Paramagnon Conductor"],
-  ["player.additem 0029F400 100", "Pigment"],
-  ["player.additem 00005573 100", "Platinum"],
-  ["player.additem 0000558C 100", "Plutonium"],
-  ["player.additem 000055A6 100", "Polymer"],
-  ["player.additem 00246B72 100", "Polytextile"],
-  ["player.additem 00246B71 100", "Positron Battery"],
-  ["player.additem 00246B5C 100", "Power Circuit"],
-  ["player.additem 00246B6F 100", "Reactive Gauge"],
-  ["player.additem 000028DF 100", "Rothicite"],
-  ["player.additem 00203EB2 100", "Rothicite Magnet"],
-  ["player.additem 000055CC 100", "Sealant"],
-  ["player.additem 000055AD 100", "Sedative"],
-  ["player.additem 00246B6D 100", "Semimetal Wafer"],
-  ["player.additem 0000556A 100", "Silver"],
-  ["player.additem 000055CE 100", "Solvent"],
-  ["player.additem 000055AC 100", "Spice"],
-  ["player.additem 002A9DE7 100", "Squall"],
-  ["player.additem 00246B6C 100", "Sterile Nanotubes"],
-  ["player.additem 000055AE 100", "Stimulant"],
-  ["player.additem 00261275 100", "Structual Hide"],
-  ["player.additem 000055B9 100", "Structual Material"],
-  ["player.additem 00122EB1 100", "Subgiant Heart"],
-  ["player.additem 00202782 100", "Substrate Molecule Sieve"],
-  ["player.additem 00246B69 100", "Supercooled Magnet"],
-  ["player.additem 002C5880 100", "Synapse Alpha"],
-  ["player.additem 0000556F 100", "Tantalum"],
-  ["player.additem 00203EAF 100", "Tasine Superconductor"],
-  ["player.additem 00246B68 100", "Tau Grade Rheostat"],
-  ["player.additem 00005578 100", "Tetrafluorides"],
-  ["player.additem 0000556D 100", "Titanium"],
-  ["player.additem 000055CB 100", "Toxin"],
-  ["player.additem 0029A847 100", "Trauma Pack"],
-  ["player.additem 0000556B 100", "Tungsten"],
-  ["player.additem 00005589 100", "Uranium"],
-  ["player.additem 0000558B 100", "Vanadium"],
-  ["player.additem 00005DEE 100", "Veryl"],
-  ["player.additem 00203EB0 100", "Veryl-Treated Manifold"],
-  ["player.additem 00203EB3 100", "Vytinium Fuel Rod"],
-  ["player.additem 00005591 100", "Water"],
-  ["player.additem 00143CB2 100", "Whiteout"],
-  ["player.additem 000057DD 100", "Xenon"],
-  ["player.additem 00005571 100", "Ytterbium"],
-  ["player.additem 00246B65 100", "Zero Wire"],
-  ["player.additem 00246B66 100", "Zero-G Gimbal"]
-],
-    "Weapon IDs": [
-  ["player.additem 002BF65B 1", "AA-99"],
-  ["player.additem 0026D965 1", "Arc Welder"],
-  ["player.additem 0026D964 1", "AutoRivet"],
-  ["player.additem 0026F181 1", "Barrow Knife"],
-  ["player.additem 0004716C 1", "Beowulf"],
-  ["player.additem 0026D963 1", "Big Bang"],
-  ["player.additem 000547A3 1", "Breach"],
-  ["player.additem 0026D96A 1", "Bridger"],
-  ["player.additem 0026D961 1", "Calibrated solstice"],
-  ["player.additem 0026D96B 1", "Coachman"],
-  ["player.additem 00035A48 1", "Combat Knife"],
-  ["player.additem 00016758 1", "Cutter"],
-  ["player.additem 0018DE2C 1", "Drum Beat"],
-  ["player.additem 002F413A 1", "Discarded Sidestar"],
-  ["player.additem 0026D96E 1", "Ecliptic Pistol"],
-  ["player.additem 000476C4 1", "Eon"],
-  ["player.additem 0001BC4F 1", "Equinox"],
-  ["player.additem 00028A02 1", "Grendel"],
-  ["player.additem 000546CC 1", "Hard Target"],
-  ["player.additem 00253A16 1", "Kodama"],
-  ["player.additem 0021FEB4 1", "Kraken"],
-  ["player.additem 0002D7F4 1", "Lawgiver"],
-  ["player.additem 002984DF 1", "Maelstrom"],
-  ["player.additem 0002EB3C 1", "MagShear"],
-  ["player.additem 00023606 1", "MagPulse"],
-  ["player.additem 0002EB42 1", "MagShot"],
-  ["player.additem 0002EB45 1", "MagSniper"],
-  ["player.additem 0026035E 1", "MagStorm"],
-  ["player.additem 000546CD 1", "Microgun"],
-  ["player.additem 0026D968 1", "Novablast Disruptor"],
-  ["player.additem 0026D967 1", "Novalight"],
-  ["player.additem 0026ED2A 1", "Old Earth Assault Rifle"],
-  ["player.additem 0021BBCD 1", "Old Earth Hunting Rifle"],
-  ["player.additem 00278F74 1", "Old Earth Shotgun"],
-  ["player.additem 0026D966 1", "Osmium Dagger"],
-  ["player.additem 002773C8 1", "Orion"],
-  ["player.additem 002953F8 1", "Pacifier"],
-  ["player.additem 00040826 1", "Rattler"],
-  ["player.additem 00000FD6 1", "Razorback"],
-  ["player.additem 0002CB5F 1", "Regulator"],
-  ["player.additem 0004F760 1", "Rescue Axe"],
-  ["player.additem 0026D960 1", "Shotty"],
-  ["player.additem 0026D95D 1", "Sidestar"],
-  ["player.additem 0026D8A3 1", "Tanto"],
-  ["player.additem 0002EB36 1", "Tombstone"],
-  ["player.additem 0026D8A5 1", "UC Naval Cutlass"],
-  ["player.additem 0026D96D 1", "Urban Eagle"],
-  ["player.additem 0026D8A0 1", "VaRuun Inflictor"],
-  ["player.additem 0026D8A2 1", "VaRuun Painblade"],
-  ["player.additem 0026D8A4 1", "VaRuun Starshard"],
-  ["player.additem 0026D8A1 1", "Wakiazashi"]
-],
-"Ammo IDs": [
-  ["player.additem 002B559C 100", ".27 Caliber"],
-  ["player.additem 002B559A 100", ".43 MI Array"],
-  ["player.additem 02B5599 100", ".43 Ultramag"],
-  ["player.additem 002B5598 100", ".45 Caliber ACP"],
-  ["player.additem 002B5597 100", ".50 Caliber Caseless"],
-  ["player.additem 002B5596 100", ".50 MI Array"],
-  ["player.additem 002BAE3F 100", "1.5KV LZR Cartridges"],
-  ["player.additem 002B5595 100", "11MM Caseless"],
-  ["player.additem 002B5594 100", "12.5MM ST Rivet"],
-  ["player.additem 000547A1 100", "12G Shotgun Shell"],
-  ["player.additem 002B4AFC 100", "15X25 CLL Shotgun Shell"],
-  ["player.additem 0000E8EC 100", "3KV LZR Cartridge"],
-  ["player.additem 002B5592 100", "40MM XPL"],
-  ["player.additem 002B5590 100", "6.5MM CT"],
-  ["player.additem 002B558F 100", "6.5MM MI Array"],
-  ["player.additem 002B558E 100", "7.5MM Whitehot"],
-  ["player.additem 002B558D 100", "7.62x39MM"],
-  ["player.additem 0004AD3E 100", "7.77MM Caseless"],
-  ["player.additem 002B559B 100", "9x39MM"],
-  ["player.additem 002B4AFB 100", "Caseless Shotgun Shell"],
-  ["player.additem 002B558A 100", "Heavy Particle Fuse"],
-  ["player.additem 002783C7 100", "Light Particle Fuse"]
-]
-,
-    "Backpacks": [
-  ["player.additem 001773BD 1", "SY-920 Pilot"],
-  ["player.additem 00169F59 1", "Shocktroop"],
-  ["player.additem 0003B423 1", "Cydonia"],
-  ["player.additem 001C0F35 1", "Bounty Hunter Stalk"],
-  ["player.additem 001C0F34 1", "Bounty Hunter Seek"],
-  ["player.additem 001C0F33 1", "Bounty Hunter Track"],
-  ["player.additem 00166402 1", "Trackers Alliance"],
-  ["player.additem 001E2B19 1", "Constellation"],
-  ["player.additem 00066824 1", "Pirate Raiding"],
-  ["player.additem 00066825 1", "Pirate Survival"],
-  ["player.additem 0016D15B 1", "Deepseeker"],
-  ["player.additem 00166407 1", "Ecliptic"],
-  ["player.additem 00169F51 1", "Explorer"],
-  ["player.additem 0003084C 1", "Old Earth"],
-  ["player.additem 002392B3 1", "Ground Crew"],
-  ["player.additem 0001754E 1", "Mark I"],
-  ["player.additem 0016E0B6 1", "Mercenary"],
-  ["player.additem 001D0F95 1", "Mercury"],
-  ["player.additem 002EDF1F 1", "Deep Mining"],
-  ["player.additem 00026BEF 1", "Deimos"],
-  ["player.additem 00029C7A 1", "Tunnel Mining"],
-  ["player.additem 00026BF2 1", "Deimos Tunnel"],
-  ["player.additem 000FD333 1", "Deepcore"],
-  ["player.additem 0016640B 1", "Mantis"],
-  ["player.additem 00067C95 1", "Navigator"],
-  ["player.additem 001E2AF7 1", "Ranger"],
-  ["player.additem 00169F55 1", "Deep Recon"],
-  ["player.additem 0013F97C 1", "Peacemaker"],
-  ["player.additem 0016E0BB 1", "Space Trucker"],
-  ["player.additem 00003E90 1", "Star Roamer"],
-  ["player.additem 00003A77 1", "High School Backpack"],
-  ["player.additem 0021A86C 1", "UC Shock Armor"],
-  ["player.additem 0020612F 1", "UC AntiXeno Skip Pack"],
-  ["player.additem 0010A25D 1", "UC AntiXeno Armor Plated (Legendary)"],
-  ["player.additem 00257807 1", "UC Marine"],
-  ["player.additem 00398105 1", "SysDef"],
-  ["player.additem 000EF9AC 1", "UC Security"],
-  ["player.additem 0016640E 1", "UC Ace Pilot"],
-  ["player.additem 002AAF43 1", "SysDef Pilot"],
-  ["player.additem 003E3D4F 1", "UC Vanguard Pilot"],
-  ["player.additem 0016D3D0 1", "VA Ruun power pack"]
-],
-"Spacesuits": [
-  ["player.additem 00065925 1", "Incendiary Experimental Nishina Spacesuit"],
-  ["player.additem 0007B2B9 1", "Sentinel's UC Antixeno Spacesuit"],
-  ["player.additem 0022B8F6 1", "Repulsing Explorer Spacesuit"],
-  ["player.additem 0013F97D 1", "Peacemaker Spacesuit"],
-  ["player.additem 00228570 1", "Bounty Hunter Spacesuit"],
-  ["player.additem 001E2B18 1", "Constellation Spacesuit"],
-  ["player.additem 0005278E 1", "Deep Mining Spacesuit"],
-  ["player.additem 002265AE 1", "Deep Recon Spacesuit"],
-  ["player.additem 002265AE 1", "Deepcore Spacesuit"],
-  ["player.additem 0016D2C4 1", "Deepseeker Spacesuit"],
-  ["player.additem 00026BF1 1", "Deimos Spacesuit"],
-  ["player.additem 0022856F 1", "Ecliptic Spacesuit"],
-  ["player.additem 002265AF 1", "Explorer Spacesuit"],
-  ["player.additem 001F22BB 1", "Gran-Gran’s Spacesuit"],
-  ["player.additem 002392B5 1", "Ground Crew Spacesuit"],
-  ["player.additem 00226299 1", "Mantis Spacesuit"],
-  ["player.additem 0001754D 1", "Mark I Spacesuit"],
-  ["player.additem 001D0F96 1", "Mercury Spacesuit"],
-  ["player.additem 00225FC9 1", "Monster Costume"],
-  ["player.additem 00067C94 1", "Navigator Spacesuit"],
-  ["player.additem 0003084E 1", "Old Earth Spacesuit"],
-  ["player.additem 00066821 1", "Pirate Assault Spacesuit"],
-  ["player.additem 00066826 1", "Pirate Charger Spacesuit"],
-  ["player.additem 00066828 1", "Pirate Corsair Spacesuit"],
-  ["player.additem 0006682A 1", "Pirate Sniper Spacesuit"],
-  ["player.additem 00227CA0 1", "Ranger Spacesuit"],
-  ["player.additem 002265AD 1", "Shocktroop Spacesuit"],
-  ["player.additem 0021C780 1", "Space Trucker Spacesuit"],
-  ["player.additem 00004E78 1", "Star Roamer Spacesuit"],
-  ["player.additem 0012E187 1", "Starborn Spacesuit Astra"],
-  ["player.additem 001CBA52 1", "Starborn Spacesuit Avitus"],
-  ["player.additem 001CBA4E 1", "Starborn Spacesuit Bellum"],
-  ["player.additem 0021C77E 1", "Starborn Spacesuit Gravitas"],
-  ["player.additem 001CBA4A 1", "Starborn Spacesuit Locus"],
-  ["player.additem 001CBA49 1", "Starborn Spacesuit Locus"],
-  ["player.additem 002D7365 1", "Starborn Spacesuit Solis"],
-  ["player.additem 002D7346 1", "Starborn Spacesuit Tempus"],
-  ["player.additem 001CBA4D 1", "Starborn Spacesuit Tenebris"],
-  ["player.additem 0021C77F 1", "Starborn Spacesuit Venator"],
-  ["player.additem 002AAF44 1", "SysDef Ace Spacesuit"],
-  ["player.additem 00398104 1", "SysDef Assault Spacesuit"],
-  ["player.additem 0039810A 1", "SysDef Combat Spacesuit"],
-  ["player.additem 00398108 1", "SysDef Sec Recon Spacesuit"],
-  ["player.additem 00398103 1", "SysDef Spacesuit"],
-  ["player.additem 00166404 1", "Trackers Alliance Spacesuit"],
-  ["player.additem 00166410 1", "UC Ace Spacesuit"],
-  ["player.additem 00206130 1", "UC AntiXeno Spacesuit"],
-  ["player.additem 00257808 1", "UC Combat Spacesuit"],
-  ["player.additem 00257805 1", "UC Marine Spacesuit"],
-  ["player.additem 000EF9B0 1", "UC Sec Combat Spacesuit"],
-  ["player.additem 000EF9AF 1", "UC Sec Recon Spacesuit"],
-  ["player.additem 000EF9AE 1", "UC Sec Starlaw Spacesuit"],
-  ["player.additem 000EF9AD 1", "UC Security Spacesuit"],
-  ["player.additem 00257809 1", "UC Startroop Spacesuit"],
-  ["player.additem 0021A86A 1", "UC Urbanwar Spacesuit"],
-  ["player.additem 00248C0F 1", "UC Vanguard Spacesuit"],
-  ["player.additem 0025780A 1", "UC Wardog Spacesuit"],
-  ["player.additem 00227CA3 1", "Va’Ruun Spacesuit"]
-],
-"Helmets": [
-  ["player.additem 00065926 1", "Reactive Experimental Nishina Helmet (Legendary)"],
-  ["player.additem 0010A25E 1", "Incendiary UC AntiXeno Space Helmet (Legendary)"],
-  ["player.additem 001466F6 1", "Black Graviplas Helmet"],
-  ["player.additem 001466FA 1", "Black Open Graviplas Helmet"],
-  ["player.additem 001C0F32 1", "Bounty Hunter Space Helmet"],
-  ["player.additem 002EDE9C 1", "Broken Constellation Space Helmet"],
-  ["player.additem 001466F7 1", "Brown Graviplas Helmet"],
-  ["player.additem 001E2B17 1", "Constellation Space Helmet"],
-  ["player.additem 0003B424 1", "Cydonia Space Helmet"],
-  ["player.additem 00052792 1", "Deep Mining Space Helmet"],
-  ["player.additem 00169F54 1", "Deep Recon Space Helmet"],
-  ["player.additem 0006ABFF 1", "Deepcore Space Helmet"],
-  ["player.additem 0016D15C 1", "Deeseeker Space Helmet"],
-  ["player.additem 00026BF0 1", "Deimos Space Helmet"],
-  ["player.additem 00228829 1", "Ecliptic Space Helmet"],
-  ["player.additem 00169F50 1", "Explorer Space Helmet"],
-  ["player.additem 0021F3F4 1", "First Solider Helmet"],
-  ["player.additem 003CD812 1", "Generdyne Guard Helmet"],
-  ["player.additem 001F22BC 1", "Gran-Gran's Space Helmet"],
-  ["player.additem 000781F7 1", "Graviplas Merc Helmet"],
-  ["player.additem 001466F8 1", "Gray Graviplas Helmet"],
-  ["player.additem 001466FC 1", "Gray Open Graviplas Helmet"],
-  ["player.additem 002392B4 1", "Ground Crew Space Helmet"],
-  ["player.additem 0016640A 1", "Mantis Space Helmet"],
-  ["player.additem 0001754F 1", "Mark I Space Helmet"],
-  ["player.additem 0016E0B5 1", "Mercenary Space Helmet"],
-  ["player.additem 001D0F94 1", "Mercury Space Helmet"],
-  ["player.additem 00067C93 1", "Navigator Space Helmet"],
-  ["player.additem 001F73EF 1", "Neon Security Helmet"],
-  ["player.additem 0003084D 1", "Old Earth Space Helmet"],
-  ["player.additem 000781F8 1", "Open Graviplas Helmet"],
-  ["player.additem 0016E0C3 1", "Operative Helmet"],
-  ["player.additem 0013F97B 1", "Peacemaker Helmet"],
-  ["player.additem 00066822 1", "Pirate Assault Space Helmet"],
-  ["player.additem 00066827 1", "Pirate Charge Space Helmet"],
-  ["player.additem 00066829 1", "Pirate Corsair Space Helmet"],
-  ["player.additem 0006682B 1", "Pirate Sniper Space Helmet"],
-  ["player.additem 001E2AC1 1", "Ranger Space Helmet"],
-  ["player.additem 0037A34F 1", "Ryujin Guard Helmet"],
-  ["player.additem 00165718 1", "Security Guard Helmet"],
-  ["player.additem 00169F58 1", "Shocktrooper Space Helmet"],
-  ["player.additem 0016E0BD 1", "Space Trucker Space Helmet"],
-  ["player.additem 00003E8F 1", "Star Roamer Space Helmet"],
-  ["player.additem 002F4B39 1", "SY-920 Space Helmet"],
-  ["player.additem 00398107 1", "SysDef Armored Space Helmet"],
-  ["player.additem 00398106 1", "SysDef Space Helmet"],
-  ["player.additem 002AAF45 1", "System Def Ace Space Helmet"],
-  ["player.additem 001466F9 1", "Teal Graviplas Helmet"],
-  ["player.additem 001466FD 1", "Teal Open Graviplas Helmet"],
-  ["player.additem 00166403 1", "Trackers Alliance Space Helmet"],
-  ["player.additem 0014E44E 1", "Trident Guard Helmet"],
-  ["player.additem 0016640F 1", "UC Ace Pilot Space Helmet"],
-  ["player.additem 0025780B 1", "UC Armored Space Helmet"],
-  ["player.additem 00257806 1", "UC Marine Space Helmet"],
-  ["player.additem 000EF9B2 1", "UC Sec Spaceriot Helmet"],
-  ["player.additem 0025E8D5 1", "UC Security Helmet"],
-  ["player.additem 000EF9B1 1", "UC Security Space Helmet"],
-  ["player.additem 0021A86B 1", "UC Urbanwar Space Helmet"],
-  ["player.additem 00248C0E 1", "UC Vanguard Space Helmet"],
-  ["player.additem 0016D3D1 1", "Va'ruun Space Helmet"]
-]
-,
-    "Physical Skills": [
-  ["player.addperk 002C59DF", "Boxing"],
-  ["player.addperk 002CE2DD", "Fitness"],
-  ["player.addperk 002CFCB2", "Stealth"],
-  ["player.addperk 002C59D9", "Weight Lifting"],
-  ["player.addperk 002CE2E1", "Wellness"],
-  ["player.addperk 002C59E2", "Energy Weapon Dissipation"],
-  ["player.addperk 0028AE17", "Environmental Conditioning"],
-  ["player.addperk 0028AE29", "Gymnastics"],
-  ["player.addperk 002CFCAD", "Nutrition"],
-  ["player.addperk 002CFCAE", "Pain Tolerance"],
-  ["player.addperk 0028AE14", "Cellular Regeneration"],
-  ["player.addperk 002CE2A0", "Decontamination"],
-  ["player.addperk 002C5554", "Martial Arts"],
-  ["player.addperk 002C555E", "Concealment"],
-  ["player.addperk 002C53B4", "Neurostrikes"],
-  ["player.addperk 0028AE13", "Rejuvenation"]
-],
-"Social Skills": [
-  ["player.addperk 002C5A8E", "Commerce"],
-  ["player.addperk 002C5A94", "Gastronomy"],
-  ["player.addperk 0022EC82", "Persuasion"],
-  ["player.addperk 0028B853", "Scavenging"],
-  ["player.addperk 002C555B", "Theft"],
-  ["player.addperk 002CFCAF", "Deception"],
-  ["player.addperk 002C59E1", "Diplomacy"],
-  ["player.addperk 002C59DE", "Intimidation"],
-  ["player.addperk 002C53AE", "Isolation"],
-  ["player.addperk 002C555F", "Negotiation"],
-  ["player.addperk 002C555D", "Instigation"],
-  ["player.addperk 002C890D", "Leadership"],
-  ["player.addperk 0023826F", "Outpost Management"],
-  ["player.addperk 002C5555", "Manipulation"],
-  ["player.addperk 002C53B3", "Ship Command"],
-  ["player.addperk 002C53B0", "Xenosociology"]
-],
-"Combat Skills": [
-  ["player.addperk 002CFCAB", "Ballistics"],
-  ["player.addperk 002CFCB0", "Dueling"],
-  ["player.addperk 002C59DD", "Lasers"],
-  ["player.addperk 002080FF", "Pistol Certification"],
-  ["player.addperk 0027DF97", "Shotgun Certification"],
-  ["player.addperk 002C5556", "Demolitions"],
-  ["player.addperk 00147E38", "Heavy Weapons Certification"],
-  ["player.addperk 0027DF96", "Incapacitation"],
-  ["player.addperk 0027BAFD", "Particle Beams"],
-  ["player.addperk 002CE2E0", "Rifle Certification"],
-  ["player.addperk 002C890B", "Marksmanship"],
-  ["player.addperk 002C555A", "Rapid Reloading"],
-  ["player.addperk 002C53B1", "Sniper Certification"],
-  ["player.addperk 002C59DA", "Targeting"],
-  ["player.addperk 0027DF94", "Armor Penetration"],
-  ["player.addperk 0027CBBA", "Crippling"],
-  ["player.addperk 002C53AF", "Sharpshooting"]
-],
-"Science Skills": [
-  ["player.addperk 002C5560", "Astrodynamics"],
-  ["player.addperk 002CE29F", "Geology"],
-  ["player.addperk 002CE2DF", "Medicine"],
-  ["player.addperk 002C555C", "Research Methods"],
-  ["player.addperk 0027CBC1", "Surveying"],
-  ["player.addperk 002C5557", "Botany"],
-  ["player.addperk 002CFCB1", "Scanning"],
-  ["player.addperk 0027CBC3", "Spacesuit Design"],
-  ["player.addperk 002C890C", "Weapon Engineering"],
-  ["player.addperk 002C5552", "Zoology"],
-  ["player.addperk 0027CBBB", "Astrophysics"],
-  ["player.addperk 002CE2C0", "Chemistry"],
-  ["player.addperk 002C59E0", "Outpost Engineering"],
-  ["player.addperk 002C2C5A", "Aneutronic Fusion"],
-  ["player.addperk 0027CBC2", "Planetary Habitation"],
-  ["player.addperk 0004CE2D", "Special Projects"]
-],
-"Tech Skills": [
-  ["player.addperk 002CE2C2", "Ballistic Weapon Systems"],
-  ["player.addperk 00146C2C", "Boost Pack Training"],
-  ["player.addperk 002CFCAC", "Piloting"],
-  ["player.addperk 002CE2E2", "Security"],
-  ["player.addperk 002C5559", "Targeting Control Systems"],
-  ["player.addperk 002C59DB", "Energy Weapon Systems"],
-  ["player.addperk 002CE2DE", "Engine Systems"],
-  ["player.addperk 00143B6B", "Payloads"],
-  ["player.addperk 002C2C59", "Shield Systems"],
-  ["player.addperk 002C5558", "Missile Weapon Systems"],
-  ["player.addperk 002C2C5B", "Particle Beam Weapon Systems"],
-  ["player.addperk 002C5553", "Robotics"],
-  ["player.addperk 002C59DC", "Starship Design"],
-  ["player.addperk 002AC953", "Starship Engineering"],
-  ["player.addperk 0027B9ED", "Automated Weapon Systems"],
-  ["player.addperk 0008C3EE", "Boost Assault Training"],
-  ["player.addperk 002C53B2", "EM Weapon Systems"]
-],
-"Traits": [
-  ["player.addperk 00227FDA", "Alien DNA"],
-  ["player.addperk 00227FDF", "Dream Home"],
-  ["player.addperk 00227FD6", "Empath"],
-  ["player.addperk 00227FD7", "Extrovert"],
-  ["player.addperk 00227FD5", "Freestar Collective Settler"],
-  ["player.addperk 00227FD9", "Hero Worshipped"],
-  ["player.addperk 00227FD8", "Introvert"],
-  ["player.addperk 00227FDE", "Kid Stuff"],
-  ["player.addperk 00227FD3", "Neon Street Rat"],
-  ["player.addperk 00227FD2", "Raised Enlightened"],
-  ["player.addperk 00227FD1", "Raised Universal"],
-  ["player.addperk 00227FD0", "Serpent's Embrace"],
-  ["player.addperk 00227FE2", "Spaced"],
-  ["player.addperk 00227FE0", "Taskmaster"],
-  ["player.addperk 00227FE1", "Terra Firma"],
-  ["player.addperk 00227FD4", "United Colonies Native"],
-  ["player.addperk 00227FDD", "Wanted"]
-],
-"Backgrounds": [
-  ["player.addperk 0022EC76", "Beast Hunter"],
-  ["player.addperk 0022EC81", "Bouncer"],
-  ["player.addperk 0022EC80", "Bounty Hunter"],
-  ["player.addperk 0022EC7F", "Chef"],
-  ["player.addperk 0022EC7E", "Combat Medic"],
-  ["player.addperk 0022EC7D", "Cyber Runner"],
-  ["player.addperk 0022EC7C", "Cyberneticist"],
-  ["player.addperk 0022EC7B", "Diplomat"],
-  ["player.addperk 0022EC79", "Explorer"],
-  ["player.addperk 0022EC78", "Gangster"],
-  ["player.addperk 0022EC77", "Homesteader"],
-  ["player.addperk 0022EC7A", "Industrialist"],
-  ["player.addperk 0022EC75", "Long Hauler"],
-  ["player.addperk 0022EC73", "Pilgrim"],
-  ["player.addperk 0022EC72", "Professor"],
-  ["player.addperk 0022EC74", "Ronin"],
-  ["player.addperk 0022EC71", "Sculptor"],
-  ["player.addperk 0022EC70", "Soldier"],
-  ["player.addperk 0022EC6F", "Space Scoundrel"],
-  ["player.addperk 0022EC6E", "Xenobiologist"],
-  ["player.addperk 002DFD1A", "File Not Found"]
-]
-,
-    "Power IDs": [
-  ["player.addspell 2BACBA", "Anti-Gravity Field"],
-  ["player.addperk 25E19C", "Level up Anti-Gravity Field"],
-  
-  ["player.addspell 2C5390", "Create Vacuum"],
-  ["player.addperk 25E19B", "Level up Create Vacuum"],
+// Full list of sections and commands exactly from the Steam guide, exact wording
+const sections = {
+  "Basic Commands": [
+    ["showlooksmenu player 1", "Opens character creator"],
+    ["tgm", "Toggle god mode"],
+    ["tdetect", "Toggle NPC detection"],
+    ["tfc", "Toggle free camera"],
+    ["tmm 1", "Show all map markers"],
+    ["tcl", "Toggle collision"],
+    ["tm", "Toggle UI"],
+    ["tai", "Toggle AI"],
+    ["unlock", "Unlock targeted door/container"],
+    ["player.additem 0000000f [#]", "Add credits"],
+    ["player.additem 0000000a [#]", "Add digipicks"],
+    ["player.setlevel [#]", "Set player level"],
+    ["player.setav speedmult [#]", "Adjust player speed"],
+    ["player.modav carryweight [#]", "Adjust carry weight"],
+    ["player.setav health [#]", "Set max health"],
+    ["setforcespeechchallengealwayssucceed 1", "Auto-success speech challenges"],
+    ["passtime [#]", "Advance time by hours"],
+    ["kill", "Kill targeted NPC"],
+    ["resurrect", "Resurrect targeted NPC"],
+    ["killall", "Kill all nearby NPCs"],
+    ["kah", "Kill all hostiles"],
+    ["tcai", "Toggle NPC combat AI"]
+  ],
+  "Pay Off Bounties": [
+    ["player.paycrimegold 0 0 0017CF8D", "Crimson Fleet"],
+    ["player.paycrimegold 0 0 000638E5", "Freestar Collective"],
+    ["player.paycrimegold 0 0 00096529", "Freestar Rangers"],
+    ["player.paycrimegold 0 0 002758C5", "House Va'ruun"],
+    ["player.paycrimegold 0 0 002B209D", "Red Mile"],
+    ["player.paycrimegold 0 0 0022E53D", "Trade Authority"],
+    ["player.paycrimegold 0 0 0017CF8D", "Neon/Ryujin Industries"],
+    ["player.paycrimegold 0 0 001D5AF9", "United Colonies"],
+    ["player.paycrimegold 0 0 0022892D", "Xenofresh Corporation"]
+  ],
+  "Material IDs": [
+    ["player.additem 00246B6A 100", "Adaptive Frame"],
+    ["player.additem 000055B1 100", "Adhesive"],
+    ["player.additem 00202F5A 100", "Aldumite Drilling Rig"],
+    ["player.additem 000C1F57 100", "Alien Genetic Material"],
+    ["player.additem 00005570 100", "Alkanes"],
+    ["player.additem 0000557D 100", "Aluminum"],
+    ["player.additem 000055CD 100", "Amino Acids"],
+    ["player.additem 000055B1 100", "Analgesic"],
+    ["player.additem 002F4436 100", "Antibiotics"],
+    ["player.additem 000055AB 100", "Antimicrobial"],
+    ["player.additem 0000557B 100", "Antimony"],
+    ["player.additem 00005588 100", "Argon"],
+    ["player.additem 000055B8 100", "Aromatic"],
+    ["player.additem 002C5884 100", "Aurora"],
+    ["player.additem 00246B7C 100", "Austinitic Manifold"],
+    ["player.additem 002A5024 100", "Battlestim"],
+    ["player.additem 00005585 100", "Benzene"],
+    ["player.additem 000057D9 100", "Beryllium"],
+    ["player.additem 000055B2 100", "Biosuppressant"],
+    ["player.additem 00122EA8 100", "Black Hole Heart"],
+    ["player.additem 000788D6 100", "Caelumite"],
+    ["player.additem 000057DF 100", "Caesium"],
+    ["player.additem 00005586 100", "Carboxylic Acids"],
+    ["player.additem 0000557C 100", "Clorine"],
+    ["player.additem 0000557E 100", "Chlorosilanes"],
+    ["player.additem 00005575 100", "Cobalt"],
+    ["player.additem 00246B64 100", "Comm Relay"],
+    ["player.additem 00246B7B 100", "Control Rod"],
+    ["player.additem 00005576 100", "Copper"],
+    ["player.additem 000055A8 100", "Cosmetic"],
+    ["player.additem 0029A85E 100", "CQB-X"],
+    ["player.additem 0020A02F 100", "Drilling Rig"],
+    ["player.additem 00122EB6 100", "Dwarf Star Heart"],
+    ["player.additem 00005569 100", "Dysprosium"],
+    ["player.additem 002A9DE8 100", "Emergency Kit"],
+    ["player.additem 000057E1 100", "Europium"],
+    ["player.additem 000055AF 100", "Fiber"],
+    ["player.additem 00260DF0 100", "Fiber Root"],
+    ["player.additem 0024F5C3 100", "Fiber Tissue"],
+    ["player.additem 00005577 100", "Flourine"],
+    ["player.additem 00005579 100", "Gold"],
+    ["player.additem 0029CAD9 100", "Heart+"],
+    ["player.additem 0029F405 100", "Hallucinogen"],
+    ["player.additem 0000558E 100", "Helium-3"],
+    ["player.additem 000055AA 100", "High-Tensile Spidroin"],
+    ["player.additem 002C5883 100", "Hippolyta"],
+    ["player.additem 0029F40D 100", "Hypercatalyst"],
+    ["player.additem 000055B3 100", "Immunostimulant"],
+    ["player.additem 0004BA37 100", "Indicite"],
+    ["player.additem 00203EB4 100", "Indicite Wafer"],
+    ["player.additem 0029A85C 100", "Infantry Alpha"],
+    ["player.additem 0000557A 100", "Ionic Liquids"],
+    ["player.additem 0000558A 100", "Iridium"],
+    ["player.additem 0000556E 100", "Iron"],
+    ["player.additem 00246B77 100", "Isocentered Magnet"],
+    ["player.additem 00246B76 100", "Isotopic Coolant"],
+    ["player.additem 00005568 100", "Lead"],
+    ["player.additem 0000557F 100", "Lithium"],
+    ["player.additem 000055BA 100", "Lubricant"],
+    ["player.additem 0000559E 100", "Luxury Textile"],
+    ["player.additem 00246B70 100", "Mag Pressure Tank"],
+    ["player.additem 000055B0 100", "Membrane"],
+    ["player.additem 0027C4A1 100", "Mercury"],
+    ["player.additem 0029F3FC 100", "Metabolic Agent"],
+    ["player.additem 00246B5F 100", "Microsecond Regulator"],
+    ["player.additem 00246B75 100", "Molecular Sieve"],
+    ["player.additem 00246B74 100", "Monopropellant"],
+    ["player.additem 00005580 100", "Neodymium"],
+    ["player.additem 00005587 100", "Neon"],
+    ["player.additem 00005572 100", "Nickel"],
+    ["player.additem 00246B79 100", "Nuclear Fuel Rod"],
+    ["player.additem 000777FD 100", "Nutrient"],
+    ["player.additem 0000557A 100", "Ornamental Material"],
+    ["player.additem 00005574 100", "Palladium"],
+    ["player.additem 00246B73 100", "Paramagnon Conductor"],
+    ["player.additem 0029F400 100", "Pigment"],
+    ["player.additem 00005573 100", "Platinum"],
+    ["player.additem 0000558C 100", "Plutonium"],
+    ["player.additem 000055A6 100", "Polymer"],
+    ["player.additem 00246B72 100", "Polytextile"],
+    ["player.additem 00246B71 100", "Positron Battery"],
+    ["player.additem 00246B5C 100", "Power Circuit"],
+    ["player.additem 00246B6F 100", "Reactive Gauge"],
+    ["player.additem 000028DF 100", "Rothicite"],
+    ["player.additem 00203EB2 100", "Rothicite Magnet"],
+    ["player.additem 000055CC 100", "Sealant"],
+    ["player.additem 000055AD 100", "Sedative"],
+    ["player.additem 00246B6D 100", "Semimetal Wafer"],
+    ["player.additem 0000556A 100", "Silver"],
+    ["player.additem 000055CE 100", "Solvent"],
+    ["player.additem 000055AC 100", "Spice"],
+    ["player.additem 002A9DE7 100", "Squall"],
+    ["player.additem 00246B6C 100", "Sterile Nanotubes"],
+    ["player.additem 000055AE 100", "Stimulant"],
+    ["player.additem 00261275 100", "Structual Hide"],
+    ["player.additem 000055B9 100", "Structual Material"],
+    ["player.additem 00122EB1 100", "Subgiant Heart"],
+    ["player.additem 00202782 100", "Substrate Molecule Sieve"],
+    ["player.additem 00246B69 100", "Supercooled Magnet"],
+    ["player.additem 002C5880 100", "Synapse Alpha"],
+    ["player.additem 0000556F 100", "Tantalum"],
+    ["player.additem 00203EAF 100", "Tasine Superconductor"],
+    ["player.additem 00246B68 100", "Tau Grade Rheostat"],
+    ["player.additem 00005578 100", "Tetrafluorides"],
+    ["player.additem 0000556D 100", "Titanium"],
+    ["player.additem 000055CB 100", "Toxin"],
+    ["player.additem 0029A847 100", "Trauma Pack"],
+    ["player.additem 0000556B 100", "Tungsten"],
+    ["player.additem 00005589 100", "Uranium"],
+    ["player.additem 0000558B 100", "Vanadium"],
+    ["player.additem 00005DEE 100", "Veryl"],
+    ["player.additem 00203EB0 100", "Veryl-Treated Manifold"],
+    ["player.additem 00203EB3 100", "Vytinium Fuel Rod"],
+    ["player.additem 00005591 100", "Water"],
+    ["player.additem 00143CB2 100", "Whiteout"],
+    ["player.additem 000057DD 100", "Xenon"],
+    ["player.additem 00005571 100", "Ytterbium"],
+    ["player.additem 00246B65 100", "Zero Wire"],
+    ["player.additem 00246B66 100", "Zero-G Gimbal"]
+  ],
+  "Weapon IDs": [
+    ["player.additem 002BF65B 1", "AA-99"],
+    ["player.additem 0026D965 1", "Arc Welder"],
+    ["player.additem 0026D964 1", "AutoRivet"],
+    ["player.additem 0026F181 1", "Barrow Knife"],
+    ["player.additem 0004716C 1", "Beowulf"],
+    ["player.additem 0026D963 1", "Big Bang"],
+    ["player.additem 000547A3 1", "Breach"],
+    ["player.additem 0026D96A 1", "Bridger"],
+    ["player.additem 0026D961 1", "Calibrated solstice"],
+    ["player.additem 0026D96B 1", "Coachman"],
+    ["player.additem 00035A48 1", "Combat Knife"],
+    ["player.additem 00016758 1", "Cutter"],
+    ["player.additem 0018DE2C 1", "Drum Beat"],
+    ["player.additem 002F413A 1", "Discarded Sidestar"],
+    ["player.additem 0026D96E 1", "Ecliptic Pistol"],
+    ["player.additem 000476C4 1", "Eon"],
+    ["player.additem 0001BC4F 1", "Equinox"],
+    ["player.additem 00028A02 1", "Grendel"],
+    ["player.additem 000546CC 1", "Hard Target"],
+    ["player.additem 00253A16 1", "Kodama"],
+    ["player.additem 0021FEB4 1", "Kraken"],
+    ["player.additem 0002D7F4 1", "Lawgiver"],
+    ["player.additem 002984DF 1", "Maelstrom"],
+    ["player.additem 0002EB3C 1", "MagShear"],
+    ["player.additem 00023606 1", "MagPulse"],
+    ["player.additem 0002EB42 1", "MagShot"],
+    ["player.additem 0002EB45 1", "MagSniper"],
+    ["player.additem 0026035E 1", "MagStorm"],
+    ["player.additem 000546CD 1", "Microgun"],
+    ["player.additem 0026D968 1", "Novablast Disruptor"],
+    ["player.additem 0026D967 1", "Novalight"],
+    ["player.additem 0026ED2A 1", "Old Earth Assault Rifle"],
+    ["player.additem 0021BBCD 1", "Old Earth Hunting Rifle"],
+    ["player.additem 00278F74 1", "Old Earth Shotgun"],
+    ["player.additem 0026D966 1", "Osmium Dagger"],
+    ["player.additem 002773C8 1", "Orion"],
+    ["player.additem 002953F8 1", "Pacifier"],
+    ["player.additem 00040826 1", "Rattler"],
+    ["player.additem 00000FD6 1", "Razorback"],
+    ["player.additem 0002CB5F 1", "Regulator"],
+    ["player.additem 0004F760 1", "Rescue Axe"],
+    ["player.additem 0026D960 1", "Shotty"],
+    ["player.additem 0026D95D 1", "Sidestar"],
+    ["player.additem 0026D8A3 1", "Tanto"],
+    ["player.additem 0002EB36 1", "Tombstone"],
+    ["player.additem 0026D8A5 1", "UC Naval Cutlass"],
+    ["player.additem 0026D96D 1", "Urban Eagle"],
+    ["player.additem 0026D8A0 1", "VaRuun Inflictor"],
+    ["player.additem 0026D8A2 1", "VaRuun Painblade"],
+    ["player.additem 0026D8A4 1", "VaRuun Starshard"],
+    ["player.additem 0026D8A1 1", "Wakiazashi"]
+  ],
+  "Ammo IDs": [
+    ["player.additem 002B559C 100", ".27 Caliber"],
+    ["player.additem 002B559A 100", ".43 MI Array"],
+    ["player.additem 02B5599 100", ".43 Ultramag"],
+    ["player.additem 002B5598 100", ".45 Caliber ACP"],
+    ["player.additem 002B5597 100", ".50 Caliber Caseless"],
+    ["player.additem 002B5596 100", ".50 MI Array"],
+    ["player.additem 002BAE3F 100", "1.5KV LZR Cartridges"],
+    ["player.additem 002B5595 100", "11MM Caseless"],
+    ["player.additem 002B5594 100", "12.5MM ST Rivet"],
+    ["player.additem 000547A1 100", "12G Shotgun Shell"],
+    ["player.additem 002B4AFC 100", "15X25 CLL Shotgun Shell"],
+    ["player.additem 0000E8EC 100", "3KV LZR Cartridge"],
+    ["player.additem 002B5592 100", "40MM XPL"],
+    ["player.additem 002B5590 100", "6.5MM CT"],
+    ["player.additem 002B558F 100", "6.5MM MI Array"],
+    ["player.additem 002B558E 100", "7.5MM Whitehot"],
+    ["player.additem 002B558D 100", "7.62x39MM"],
+    ["player.additem 0004AD3E 100", "7.77MM Caseless"],
+    ["player.additem 002B559B 100", "9x39MM"],
+    ["player.additem 002B4AFB 100", "Caseless Shotgun Shell"],
+    ["player.additem 002B558A 100", "Heavy Particle Fuse"],
+    ["player.additem 002783C7 100", "Light Particle Fuse"]
+  ],
+  "Backpacks": [
+    ["player.additem 001773BD 1", "SY-920 Pilot"],
+    ["player.additem 00169F59 1", "Shocktroop"],
+    ["player.additem 0003B423 1", "Cydonia"],
+    ["player.additem 001C0F35 1", "Bounty Hunter Stalk"],
+    ["player.additem 001C0F34 1", "Bounty Hunter Seek"],
+    ["player.additem 001C0F33 1", "Bounty Hunter Track"],
+    ["player.additem 00166402 1", "Trackers Alliance"],
+    ["player.additem 001E2B19 1", "Constellation"],
+    ["player.additem 00066824 1", "Pirate Raiding"],
+    ["player.additem 00066825 1", "Pirate Survival"],
+    ["player.additem 0016D15B 1", "Deepseeker"],
+    ["player.additem 00166407 1", "Ecliptic"],
+    ["player.additem 00169F51 1", "Explorer"],
+    ["player.additem 0003084C 1", "Old Earth"],
+    ["player.additem 002392B3 1", "Ground Crew"],
+    ["player.additem 0001754E 1", "Mark I"],
+    ["player.additem 0016E0B6 1", "Mercenary"],
+    ["player.additem 001D0F95 1", "Mercury"],
+    ["player.additem 002EDF1F 1", "Deep Mining"],
+    ["player.additem 00026BEF 1", "Deimos"],
+    ["player.additem 00029C7A 1", "Tunnel Mining"],
+    ["player.additem 00026BF2 1", "Deimos Tunnel"],
+    ["player.additem 000FD333 1", "Deepcore"],
+    ["player.additem 0016640B 1", "Mantis"],
+    ["player.additem 00067C95 1", "Navigator"],
+    ["player.additem 001E2AF7 1", "Ranger"],
+    ["player.additem 00169F55 1", "Deep Recon"],
+    ["player.additem 0013F97C 1", "Peacemaker"],
+    ["player.additem 0016E0BB 1", "Space Trucker"],
+    ["player.additem 00003E90 1", "Star Roamer"],
+    ["player.additem 00003A77 1", "High School Backpack"],
+    ["player.additem 0021A86C 1", "UC Shock Armor"],
+    ["player.additem 0020612F 1", "UC AntiXeno Skip Pack"],
+    ["player.additem 0010A25D 1", "UC AntiXeno Armor Plated (Legendary)"],
+    ["player.additem 00257807 1", "UC Marine"],
+    ["player.additem 00398105 1", "SysDef"],
+    ["player.additem 000EF9AC 1", "UC Security"],
+    ["player.additem 0016640E 1", "UC Ace Pilot"],
+    ["player.additem 002AAF43 1", "SysDef Pilot"],
+    ["player.additem 003E3D4F 1", "UC Vanguard Pilot"],
+    ["player.additem 0016D3D0 1", "VA Ruun power pack"]
+  ],
+  "Spacesuits": [
+    ["player.additem 00065925 1", "Incendiary Experimental Nishina Spacesuit"],
+    ["player.additem 0007B2B9 1", "Sentinel's UC Antixeno Spacesuit"],
+    ["player.additem 0022B8F6 1", "Repulsing Explorer Spacesuit"],
+    ["player.additem 0013F97D 1", "Peacemaker Spacesuit"],
+    ["player.additem 00228570 1", "Bounty Hunter Spacesuit"],
+    ["player.additem 001E2B18 1", "Constellation Spacesuit"],
+    ["player.additem 0005278E 1", "Deep Mining Spacesuit"],
+    ["player.additem 002265AE 1", "Deep Recon Spacesuit"],
+    ["player.additem 002265AE 1", "Deepcore Spacesuit"],
+    ["player.additem 0016D2C4 1", "Deepseeker Spacesuit"],
+    ["player.additem 00026BF1 1", "Deimos Spacesuit"],
+    ["player.additem 0022856F 1", "Ecliptic Spacesuit"],
+    ["player.additem 002265AF 1", "Explorer Spacesuit"],
+    ["player.additem 001F22BB 1", "Gran-Gran’s Spacesuit"],
+    ["player.additem 002392B5 1", "Ground Crew Spacesuit"],
+    ["player.additem 00226299 1", "Mantis Spacesuit"],
+    ["player.additem 0001754D 1", "Mark I Spacesuit"],
+    ["player.additem 001D0F96 1", "Mercury Spacesuit"],
+    ["player.additem 00225FC9 1", "Monster Costume"],
+    ["player.additem 00067C94 1", "Navigator Spacesuit"],
+    ["player.additem 0003084E 1", "Old Earth Spacesuit"],
+    ["player.additem 00066821 1", "Pirate Assault Spacesuit"],
+    ["player.additem 00066826 1", "Pirate Charger Spacesuit"],
+    ["player.additem 00066828 1", "Pirate Corsair Spacesuit"],
+    ["player.additem 0006682A 1", "Pirate Sniper Spacesuit"],
+    ["player.additem 00227CA0 1", "Ranger Spacesuit"],
+    ["player.additem 002265AD 1", "Shocktroop Spacesuit"],
+    ["player.additem 0021C780 1", "Space Trucker Spacesuit"],
+    ["player.additem 00004E78 1", "Star Roamer Spacesuit"],
+    ["player.additem 0012E187 1", "Starborn Spacesuit Astra"],
+    ["player.additem 001CBA52 1", "Starborn Spacesuit Avitus"],
+    ["player.additem 001CBA4E 1", "Starborn Spacesuit Bellum"],
+    ["player.additem 0021C77E 1", "Starborn Spacesuit Gravitas"],
+    ["player.additem 001CBA4A 1", "Starborn Spacesuit Locus"],
+    ["player.additem 001CBA49 1", "Starborn Spacesuit Locus"],
+    ["player.additem 002D7365 1", "Starborn Spacesuit Solis"],
+    ["player.additem 002D7346 1", "Starborn Spacesuit Tempus"],
+    ["player.additem 001CBA4D 1", "Starborn Spacesuit Tenebris"],
+    ["player.additem 0021C77F 1", "Starborn Spacesuit Venator"],
+    ["player.additem 002AAF44 1", "SysDef Ace Spacesuit"],
+    ["player.additem 00398104 1", "SysDef Assault Spacesuit"],
+    ["player.additem 0039810A 1", "SysDef Combat Spacesuit"],
+    ["player.additem 00398108 1", "SysDef Sec Recon Spacesuit"],
+    ["player.additem 00398103 1", "SysDef Spacesuit"],
+    ["player.additem 00166404 1", "Trackers Alliance Spacesuit"],
+    ["player.additem 00166410 1", "UC Ace Spacesuit"],
+    ["player.additem 00206130 1", "UC AntiXeno Spacesuit"],
+    ["player.additem 00257808 1", "UC Combat Spacesuit"],
+    ["player.additem 00257805 1", "UC Marine Spacesuit"],
+    ["player.additem 000EF9B0 1", "UC Sec Combat Spacesuit"],
+    ["player.additem 000EF9AF 1", "UC Sec Recon Spacesuit"],
+    ["player.additem 000EF9AE 1", "UC Sec Starlaw Spacesuit"],
+    ["player.additem 000EF9AD 1", "UC Security Spacesuit"],
+    ["player.additem 00257809 1", "UC Startroop Spacesuit"],
+    ["player.additem 0021A86A 1", "UC Urbanwar Spacesuit"],
+    ["player.additem 00248C0F 1", "UC Vanguard Spacesuit"],
+    ["player.additem 0025780A 1", "UC Wardog Spacesuit"],
+    ["player.additem 00227CA3 1", "Va’Ruun Spacesuit"]
+  ],
+  "Helmets": [
+    ["player.additem 00065926 1", "Reactive Experimental Nishina Helmet (Legendary)"],
+    ["player.additem 0010A25E 1", "Incendiary UC AntiXeno Space Helmet (Legendary)"],
+    ["player.additem 001466F6 1", "Black Graviplas Helmet"],
+    ["player.additem 001466FA 1", "Black Open Graviplas Helmet"],
+    ["player.additem 001C0F32 1", "Bounty Hunter Space Helmet"],
+    ["player.additem 002EDE9C 1", "Broken Constellation Space Helmet"],
+    ["player.additem 001466F7 1", "Brown Graviplas Helmet"],
+    ["player.additem 001E2B17 1", "Constellation Space Helmet"],
+    ["player.additem 0003B424 1", "Cydonia Space Helmet"],
+    ["player.additem 00052792 1", "Deep Mining Space Helmet"],
+    ["player.additem 00169F54 1", "Deep Recon Space Helmet"],
+    ["player.additem 0006ABFF 1", "Deepcore Space Helmet"],
+    ["player.additem 0016D15C 1", "Deeseeker Space Helmet"],
+    ["player.additem 00026BF0 1", "Deimos Space Helmet"],
+    ["player.additem 00228829 1", "Ecliptic Space Helmet"],
+    ["player.additem 00169F50 1", "Explorer Space Helmet"],
+    ["player.additem 0021F3F4 1", "First Solider Helmet"],
+    ["player.additem 003CD812 1", "Generdyne Guard Helmet"],
+    ["player.additem 001F22BC 1", "Gran-Gran's Space Helmet"],
+    ["player.additem 000781F7 1", "Graviplas Merc Helmet"],
+    ["player.additem 001466F8 1", "Gray Graviplas Helmet"],
+    ["player.additem 001466FC 1", "Gray Open Graviplas Helmet"],
+    ["player.additem 002392B4 1", "Ground Crew Space Helmet"],
+    ["player.additem 0016640A 1", "Mantis Space Helmet"],
+    ["player.additem 0001754F 1", "Mark I Space Helmet"],
+    ["player.additem 0016E0B5 1", "Mercenary Space Helmet"],
+    ["player.additem 001D0F94 1", "Mercury Space Helmet"],
+    ["player.additem 00067C93 1", "Navigator Space Helmet"],
+    ["player.additem 001F73EF 1", "Neon Security Helmet"],
+    ["player.additem 0003084D 1", "Old Earth Space Helmet"],
+    ["player.additem 000781F8 1", "Open Graviplas Helmet"],
+    ["player.additem 0016E0C3 1", "Operative Helmet"],
+    ["player.additem 0013F97B 1", "Peacemaker Helmet"],
+    ["player.additem 00066822 1", "Pirate Assault Space Helmet"],
+    ["player.additem 00066827 1", "Pirate Charge Space Helmet"],
+    ["player.additem 00066829 1", "Pirate Corsair Space Helmet"],
+    ["player.additem 0006682B 1", "Pirate Sniper Space Helmet"],
+    ["player.additem 001E2AC1 1", "Ranger Space Helmet"],
+    ["player.additem 0037A34F 1", "Ryujin Guard Helmet"],
+    ["player.additem 00165718 1", "Security Guard Helmet"],
+    ["player.additem 00169F58 1", "Shocktrooper Space Helmet"],
+    ["player.additem 0016E0BD 1", "Space Trucker Space Helmet"],
+    ["player.additem 00003E8F 1", "Star Roamer Space Helmet"],
+    ["player.additem 002F4B39 1", "SY-920 Space Helmet"],
+    ["player.additem 00398107 1", "SysDef Armored Space Helmet"],
+    ["player.additem 00398106 1", "SysDef Space Helmet"],
+    ["player.additem 002AAF45 1", "System Def Ace Space Helmet"],
+    ["player.additem 001466F9 1", "Teal Graviplas Helmet"],
+    ["player.additem 001466FD 1", "Teal Open Graviplas Helmet"],
+    ["player.additem 00166403 1", "Trackers Alliance Space Helmet"],
+    ["player.additem 0014E44E 1", "Trident Guard Helmet"],
+    ["player.additem 0016640F 1", "UC Ace Pilot Space Helmet"],
+    ["player.additem 0025780B 1", "UC Armored Space Helmet"],
+    ["player.additem 00257806 1", "UC Marine Space Helmet"],
+    ["player.additem 000EF9B2 1", "UC Sec Spaceriot Helmet"],
+    ["player.additem 0025E8D5 1", "UC Security Helmet"],
+    ["player.additem 000EF9B1 1", "UC Security Space Helmet"],
+    ["player.additem 0021A86B 1", "UC Urbanwar Space Helmet"],
+    ["player.additem 00248C0E 1", "UC Vanguard Space Helmet"],
+    ["player.additem 0016D3D1 1", "Va'ruun Space Helmet"]
+  ],
+  "Physical Skills": [
+    ["player.addperk 002C59DF", "Boxing"],
+    ["player.addperk 002CE2DD", "Fitness"],
+    ["player.addperk 002CFCB2", "Stealth"],
+    ["player.addperk 002C59D9", "Weight Lifting"],
+    ["player.addperk 002CE2E1", "Wellness"],
+    ["player.addperk 002C59E2", "Energy Weapon Dissipation"],
+    ["player.addperk 0028AE17", "Environmental Conditioning"],
+    ["player.addperk 0028AE29", "Gymnastics"],
+    ["player.addperk 002CFCAD", "Nutrition"],
+    ["player.addperk 002CFCAE", "Pain Tolerance"],
+    ["player.addperk 0028AE14", "Cellular Regeneration"],
+    ["player.addperk 002CE2A0", "Decontamination"],
+    ["player.addperk 002C5554", "Martial Arts"],
+    ["player.addperk 002C555E", "Concealment"],
+    ["player.addperk 002C53B4", "Neurostrikes"],
+    ["player.addperk 0028AE13", "Rejuvenation"]
+  ],
+  "Social Skills": [
+    ["player.addperk 002C5A8E", "Commerce"],
+    ["player.addperk 002C5A94", "Gastronomy"],
+    ["player.addperk 0022EC82", "Persuasion"],
+    ["player.addperk 0028B853", "Scavenging"],
+    ["player.addperk 002C555B", "Theft"],
+    ["player.addperk 002CFCAF", "Deception"],
+    ["player.addperk 002C59E1", "Diplomacy"],
+    ["player.addperk 002C59DE", "Intimidation"],
+    ["player.addperk 002C53AE", "Isolation"],
+    ["player.addperk 002C555F", "Negotiation"],
+    ["player.addperk 002C555D", "Instigation"],
+    ["player.addperk 002C890D", "Leadership"],
+    ["player.addperk 0023826F", "Outpost Management"],
+    ["player.addperk 002C5555", "Manipulation"],
+    ["player.addperk 002C53B3", "Ship Command"],
+    ["player.addperk 002C53B0", "Xenosociology"]
+  ],
+  "Combat Skills": [
+    ["player.addperk 002CFCAB", "Ballistics"],
+    ["player.addperk 002CFCB0", "Dueling"],
+    ["player.addperk 002C59DD", "Lasers"],
+    ["player.addperk 002080FF", "Pistol Certification"],
+    ["player.addperk 0027DF97", "Shotgun Certification"],
+    ["player.addperk 002C5556", "Demolitions"],
+    ["player.addperk 00147E38", "Heavy Weapons Certification"],
+    ["player.addperk 0027DF96", "Incapacitation"],
+    ["player.addperk 0027BAFD", "Particle Beams"],
+    ["player.addperk 002CE2E0", "Rifle Certification"],
+    ["player.addperk 002C890B", "Marksmanship"],
+    ["player.addperk 002C555A", "Rapid Reloading"],
+    ["player.addperk 002C53B1", "Sniper Certification"],
+    ["player.addperk 002C59DA", "Targeting"],
+    ["player.addperk 0027DF94", "Armor Penetration"],
+    ["player.addperk 0027CBBA", "Crippling"],
+    ["player.addperk 002C53AF", "Sharpshooting"]
+  ],
+  "Science Skills": [
+    ["player.addperk 002C5560", "Astrodynamics"],
+    ["player.addperk 002CE29F", "Geology"],
+    ["player.addperk 002CE2DF", "Medicine"],
+    ["player.addperk 002C555C", "Research Methods"],
+    ["player.addperk 0027CBC1", "Surveying"],
+    ["player.addperk 002C5557", "Botany"],
+    ["player.addperk 002CFCB1", "Scanning"],
+    ["player.addperk 0027CBC3", "Spacesuit Design"],
+    ["player.addperk 002C890C", "Weapon Engineering"],
+    ["player.addperk 002C5552", "Zoology"],
+    ["player.addperk 0027CBBB", "Astrophysics"],
+    ["player.addperk 002CE2C0", "Chemistry"],
+    ["player.addperk 002C59E0", "Outpost Engineering"],
+    ["player.addperk 002C2C5A", "Aneutronic Fusion"],
+    ["player.addperk 0027CBC2", "Planetary Habitation"],
+    ["player.addperk 0004CE2D", "Special Projects"]
+  ],
+  "Tech Skills": [
+    ["player.addperk 002CE2C2", "Ballistic Weapon Systems"],
+    ["player.addperk 00146C2C", "Boost Pack Training"],
+    ["player.addperk 002CFCAC", "Piloting"],
+    ["player.addperk 002CE2E2", "Security"],
+    ["player.addperk 002C5559", "Targeting Control Systems"],
+    ["player.addperk 002C59DB", "Energy Weapon Systems"],
+    ["player.addperk 002CE2DE", "Engine Systems"],
+    ["player.addperk 00143B6B", "Payloads"],
+    ["player.addperk 002C2C59", "Shield Systems"],
+    ["player.addperk 002C5558", "Missile Weapon Systems"],
+    ["player.addperk 002C2C5B", "Particle Beam Weapon Systems"],
+    ["player.addperk 002C5553", "Robotics"],
+    ["player.addperk 002C59DC", "Starship Design"],
+    ["player.addperk 002AC953", "Starship Engineering"],
+    ["player.addperk 0027B9ED", "Automated Weapon Systems"],
+    ["player.addperk 0008C3EE", "Boost Assault Training"],
+    ["player.addperk 002C53B2", "EM Weapon Systems"]
+  ],
+  "Traits": [
+    ["player.addperk 00227FDA", "Alien DNA"],
+    ["player.addperk 00227FDF", "Dream Home"],
+    ["player.addperk 00227FD6", "Empath"],
+    ["player.addperk 00227FD7", "Extrovert"],
+    ["player.addperk 00227FD5", "Freestar Collective Settler"],
+    ["player.addperk 00227FD9", "Hero Worshipped"],
+    ["player.addperk 00227FD8", "Introvert"],
+    ["player.addperk 00227FDE", "Kid Stuff"],
+    ["player.addperk 00227FD3", "Neon Street Rat"],
+    ["player.addperk 00227FD2", "Raised Enlightened"],
+    ["player.addperk 00227FD1", "Raised Universal"],
+    ["player.addperk 00227FD0", "Serpent's Embrace"],
+    ["player.addperk 00227FE2", "Spaced"],
+    ["player.addperk 00227FE0", "Taskmaster"],
+    ["player.addperk 00227FE1", "Terra Firma"],
+    ["player.addperk 00227FD4", "United Colonies Native"],
+    ["player.addperk 00227FDD", "Wanted"]
+  ],
+  "Backgrounds": [
+    ["player.addperk 0022EC76", "Beast Hunter"],
+    ["player.addperk 0022EC81", "Bouncer"],
+    ["player.addperk 0022EC80", "Bounty Hunter"],
+    ["player.addperk 0022EC7F", "Chef"],
+    ["player.addperk 0022EC7E", "Combat Medic"],
+    ["player.addperk 0022EC7D", "Cyber Runner"],
+    ["player.addperk 0022EC7C", "Cyberneticist"],
+    ["player.addperk 0022EC7B", "Diplomat"],
+    ["player.addperk 0022EC79", "Explorer"],
+    ["player.addperk 0022EC78", "Gangster"],
+    ["player.addperk 0022EC77", "Homesteader"],
+    ["player.addperk 0022EC7A", "Industrialist"],
+    ["player.addperk 0022EC75", "Long Hauler"],
+    ["player.addperk 0022EC73", "Pilgrim"],
+    ["player.addperk 0022EC72", "Professor"],
+    ["player.addperk 0022EC74", "Ronin"],
+    ["player.addperk 0022EC71", "Sculptor"],
+    ["player.addperk 0022EC70", "Soldier"],
+    ["player.addperk 0022EC6F", "Space Scoundrel"],
+    ["player.addperk 0022EC6E", "Xenobiologist"],
+    ["player.addperk 002DFD1A", "File Not Found"]
+  ],
+  "Power IDs": [
+    ["player.addspell 2BACBA", "Anti-Gravity Field"],
+    ["player.addperk 25E19C", "Level up Anti-Gravity Field"],
+    ["player.addspell 2C5390", "Create Vacuum"],
+    ["player.addperk 25E19B", "Level up Create Vacuum"],
+    ["player.addspell 2C538D", "Creators' Peace"],
+    ["player.addperk 25E19A", "Level up Creators' Peace"],
+    ["player.addspell 2BACB5", "Earthbound"],
+    ["player.addperk 25E199", "Level up Earthbound"],
+    ["player.addspell 2C5391", "Elemental Pull"],
+    ["player.addperk 25E198", "Level up Elemental Pull"],
+    ["player.addspell 2C538F", "Alien Reanimation"],
+    ["player.addperk 25E19D", "Level up Alien Reanimation"],
+    ["player.addspell 2BACB4", "Eternal Harvest"],
+    ["player.addperk 25E197", "Level up Eternal Harvest"],
+    ["player.addspell 2C538C", "Grav Dash"],
+    ["player.addperk 25E196", "Level up Grav Dash"],
+    ["player.addspell 2BACB7", "Gravity Wave"],
+    ["player.addperk 25E195", "Level up Gravity Wave"],
+    ["player.addspell 2C5A62", "Gravity Well"],
+    ["player.addperk 25E193", "Level up Gravity Well"],
+    ["player.addspell 2C5399", "Inner Demon"],
+    ["player.addperk 25E192", "Level up Inner Demon"],
+    ["player.addspell 2C538B", "Life Forced"],
+    ["player.addperk 25E191", "Level up Life Forced"],
+    ["player.addspell 2C5A4E", "Moon Form"],
+    ["player.addperk 25E190", "Level up Moon Form"],
+    ["player.addspell 2C5A67", "Parallel Self"],
+    ["player.addperk 25E18E", "Level up Parallel Self"],
+    ["player.addspell 2C5A66", "Particle Beam"],
+    ["player.addperk 25E18D", "Level up Particle Beam"],
+    ["player.addspell 2C5389", "Personal Atmosphere"],
+    ["player.addperk 25E18C", "Level up Personal Atmosphere"],
+    ["player.addspell 2C5A63", "Phased Time"],
+    ["player.addperk 25E18B", "Level up Phased Time"],
+    ["player.addspell 2C538A", "Precognition"],
+    ["player.addperk 25E18F", "Level up Precognition"],
+    ["player.addspell 2BACB6", "Reactive Shield"],
+    ["player.addperk 25E19E", "Level up Reactive Shield"],
+    ["player.addspell 2C5A54", "Sense Star Stuff"],
+    ["player.addperk 25E18A", "Level up Sense Star Stuff"],
+    ["player.addspell 2C5A59", "Solar Flare"],
+    ["player.addperk 25E189", "Level up Solar Flare"],
+    ["player.addspell 2C5388", "Sunless Space"],
+    ["player.addperk 25E188", "Level up Sunless Space"],
+    ["player.addspell 2C5387", "Supernova"],
+    ["player.addperk 25E187", "Level up Supernova"],
+    ["player.addspell 2C5A53", "Void Form"],
+    ["player.addperk 25E186", "Level up Void Form"]
+  ],
+  "Weapon Mods": [
+    [".amod 000FF442", "Anti-Personnel - 10% damage against humans."],
+    [".amod 000FEA07", "Bashing - Deals double damage when gun bashing."],
+    [".amod 000F437E", "Berserker - Does more damage the less armor one has."],
+    [".amod 000F428E", "Cornered - Damage increases as health decreases."],
+    [".amod 000FC884", "Demoralizing - Small chance to demoralize a target."],
+    [".amod 001625EB", "Disassembler - +20% damage against robots."],
+    [".amod 000FA8D6", "Explosive - Randomly switches to explosive rounds."],
+    [".amod 000FFA3B", "Extended Magazine - Doubles the base magazine capacity"],
+    [".amod 0015DD18", "Exterminator - +30% damage against ailens."],
+    [".amod 000FC8A4", "Frenzy - Small chance to frenzy a target."],
+    [".amod 000EA117", "Furious - Each consecutive hit deals more damage."],
+    [".amod 000EA0BA", "Handloading - Volatile rounds that pack a bigger punch but aren't as stable and can occassionaly fail."],
+    [".amod 00122F1C", "Hitman - +15% damage while aiming."],
+    [".amod 000F2013", "Instigating - Deals double damage to targets with full health."],
+    [".amod 000FEA49", "Lacerate - Randomly applies a bleed effect to the target."],
+    [".amod 000FFA3C", "Med Theft - Chance that humans drop extra Med Packs on death."],
+    [".amod 00319AEC", "Poison - Randomly deals poison damage and slows the target."],
+    [".amod 000FEA04", "Rapid - +25% increase in attack speed."],
+    [".amod 000F4557", "Shattering - Break through even the strongest armor"],
+    [".amod 0031C0C4", "Skip Shot - Every fourth shot fires two projectiles at once."],
+    [".amod 000F7321", "Space-Adept - +30% damage while in space, and -15% damage while on a planet."],
+    [".amod 000E8D64", "Staggering - Small chance to stagger enemies"],
+    [".amod 0031C0C6", "Telsa - Rounds will sometimes emit electricity that damages and slows nearby targets."],
+    [".amod 000FFA3D", "Titanium Build - Make this weapon light as a feather ."]
+  ]
+};
 
-  ["player.addspell 2C538D", "Creators' Peace"],
-  ["player.addperk 25E19A", "Level up Creators' Peace"],
+// --------- Navigation for sections -----------
+const nav = document.getElementById('nav-sections');
+const sectionIDs = [];
+Object.keys(sections).forEach(section => {
+  const id = section.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  sectionIDs.push(id);
+  const a = document.createElement('a');
+  a.href = `#${id}`;
+  a.textContent = section;
+  nav.appendChild(a);
+});
 
-  ["player.addspell 2BACB5", "Earthbound"],
-  ["player.addperk 25E199", "Level up Earthbound"],
+// --------- Command rendering -----------
+const container = document.getElementById("container");
 
-  ["player.addspell 2C5391", "Elemental Pull"],
-  ["player.addperk 25E198", "Level up Elemental Pull"],
+function createRow(cmd, label) {
+  const row = document.createElement("div");
+  row.className = "row";
 
-  ["player.addspell 2C538F", "Alien Reanimation"],
-  ["player.addperk 25E19D", "Level up Alien Reanimation"],
+  const btn = document.createElement("button");
+  btn.className = "copy-btn";
+  btn.textContent = "Copy";
+  btn.onclick = () => copyText(cmd);
 
-  ["player.addspell 2BACB4", "Eternal Harvest"],
-  ["player.addperk 25E197", "Level up Eternal Harvest"],
+  const input = document.createElement("input");
+  input.className = "cmd";
+  input.type = "text";
+  input.readOnly = true;
+  input.value = cmd;
 
-  ["player.addspell 2C538C", "Grav Dash"],
-  ["player.addperk 25E196", "Level up Grav Dash"],
+  const lbl = document.createElement("div");
+  lbl.className = "label";
+  lbl.textContent = label;
 
-  ["player.addspell 2BACB7", "Gravity Wave"],
-  ["player.addperk 25E195", "Level up Gravity Wave"],
+  row.append(btn, input, lbl);
+  return row;
+}
 
-  ["player.addspell 2C5A62", "Gravity Well"],
-  ["player.addperk 25E193", "Level up Gravity Well"],
+function showCopyNotification() {
+  const notif = document.getElementById('copy-notification');
+  notif.classList.add('show');
+  clearTimeout(notif._timeout);
+  notif._timeout = setTimeout(() => {
+    notif.classList.remove('show');
+  }, 1200);
+}
 
-  ["player.addspell 2C5399", "Inner Demon"],
-  ["player.addperk 25E192", "Level up Inner Demon"],
-
-  ["player.addspell 2C538B", "Life Forced"],
-  ["player.addperk 25E191", "Level up Life Forced"],
-
-  ["player.addspell 2C5A4E", "Moon Form"],
-  ["player.addperk 25E190", "Level up Moon Form"],
-
-  ["player.addspell 2C5A67", "Parallel Self"],
-  ["player.addperk 25E18E", "Level up Parallel Self"],
-
-  ["player.addspell 2C5A66", "Particle Beam"],
-  ["player.addperk 25E18D", "Level up Particle Beam"],
-
-  ["player.addspell 2C5389", "Personal Atmosphere"],
-  ["player.addperk 25E18C", "Level up Personal Atmosphere"],
-
-  ["player.addspell 2C5A63", "Phased Time"],
-  ["player.addperk 25E18B", "Level up Phased Time"],
-
-  ["player.addspell 2C538A", "Precognition"],
-  ["player.addperk 25E18F", "Level up Precognition"],
-
-  ["player.addspell 2BACB6", "Reactive Shield"],
-  ["player.addperk 25E19E", "Level up Reactive Shield"],
-
-  ["player.addspell 2C5A54", "Sense Star Stuff"],
-  ["player.addperk 25E18A", "Level up Sense Star Stuff"],
-
-  ["player.addspell 2C5A59", "Solar Flare"],
-  ["player.addperk 25E189", "Level up Solar Flare"],
-
-  ["player.addspell 2C5388", "Sunless Space"],
-  ["player.addperk 25E188", "Level up Sunless Space"],
-
-  ["player.addspell 2C5387", "Supernova"],
-  ["player.addperk 25E187", "Level up Supernova"],
-
-  ["player.addspell 2C5A53", "Void Form"],
-  ["player.addperk 25E186", "Level up Void Form"]
-],
-
-"Weapon Mods":
-[
-  [".amod 000FF442", "Anti-Personnel - 10% damage against humans."],
-  [".amod 000FEA07", "Bashing - Deals double damage when gun bashing."],
-  [".amod 000F437E", "Berserker - Does more damage the less armor one has."],
-  [".amod 000F428E", "Cornered - Damage increases as health decreases."],
-  [".amod 000FC884", "Demoralizing - Small chance to demoralize a target."],
-  [".amod 001625EB", "Disassembler - +20% damage against robots."],
-  [".amod 000FA8D6", "Explosive - Randomly switches to explosive rounds."],
-  [".amod 000FFA3B", "Extended Magazine - Doubles the base magazine capacity"],
-  [".amod 0015DD18", "Exterminator - +30% damage against ailens."],
-  [".amod 000FC8A4", "Frenzy - Small chance to frenzy a target."],
-  [".amod 000EA117", "Furious - Each consecutive hit deals more damage."],
-  [".amod 000EA0BA", "Handloading - Volatile rounds that pack a bigger punch but aren't as stable and can occassionaly fail."],
-  [".amod 00122F1C", "Hitman - +15% damage while aiming."],
-  [".amod 000F2013", "Instigating - Deals double damage to targets with full health."],
-  [".amod 000FEA49", "Lacerate - Randomly applies a bleed effect to the target."],
-  [".amod 000FFA3C", "Med Theft - Chance that humans drop extra Med Packs on death."],
-  [".amod 00319AEC", "Poison - Randomly deals poison damage and slows the target."],
-  [".amod 000FEA04", "Rapid - +25% increase in attack speed."],
-  [".amod 000F4557", "Shattering - Break through even the strongest armor"],
-  [".amod 0031C0C4", "Skip Shot - Every fourth shot fires two projectiles at once."],
-  [".amod 000F7321", "Space-Adept - +30% damage while in space, and -15% damage while on a planet."],
-  [".amod 000E8D64", "Staggering - Small chance to stagger enemies"],
-  [".amod 0031C0C6", "Telsa - Rounds will sometimes emit electricity that damages and slows nearby targets."],
-  [".amod 000FFA3D", "Titanium Build - Make this weapon light as a feather ."]
-]
-
-
-  };
-
-  const container = document.getElementById("container");
-
-  function createRow(cmd, label) {
-    const row = document.createElement("div");
-    row.className = "row";
-
-    const btn = document.createElement("button");
-    btn.className = "copy-btn";
-    btn.textContent = "Copy";
-    btn.onclick = () => copyText(cmd);
-
-    const input = document.createElement("input");
-    input.className = "cmd";
-    input.type = "text";
-    input.readOnly = true;
-    input.value = cmd;
-
-    const lbl = document.createElement("div");
-    lbl.className = "label";
-    lbl.textContent = label;
-
-    row.append(btn, input, lbl);
-    return row;
+async function copyText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
   }
+  showCopyNotification();
+}
 
-  async function copyText(text) {
-    try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      document.body.removeChild(ta);
+// Render all sections and commands, add anchor ids for nav
+Object.entries(sections).forEach(([section, commands], i) => {
+  const id = sectionIDs[i];
+  const h2 = document.createElement("h2");
+  h2.textContent = section;
+  h2.id = id;
+  container.appendChild(h2);
+
+  commands.forEach(([cmd, label]) => {
+    container.appendChild(createRow(cmd, label));
+  });
+});
+
+// --------- Back to Top Button -----------
+const backToTopBtn = document.getElementById('back-to-top');
+window.addEventListener('scroll', function() {
+  if (window.scrollY > 400) {
+    backToTopBtn.style.display = 'block';
+  } else {
+    backToTopBtn.style.display = 'none';
+  }
+  // Update nav active link
+  let current = '';
+  const sectionElements = sectionIDs.map(id => document.getElementById(id));
+  const scrollPos = window.scrollY + 120; // slight offset for sticky nav
+  sectionElements.forEach((el, idx) => {
+    if (el && el.offsetTop <= scrollPos) current = sectionIDs[idx];
+  });
+  Array.from(nav.children).forEach(a => {
+    if (a.getAttribute('href') === `#${current}`) {
+      a.classList.add('active');
+    } else {
+      a.classList.remove('active');
+    }
+  });
+});
+backToTopBtn.onclick = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+// --------- Smooth scroll for nav links with offset -----------
+const NAV_OFFSET = 110; // Adjust if your nav is a different height
+nav.addEventListener('click', function(e) {
+  if (e.target.tagName === 'A' && e.target.hash) {
+    const target = document.getElementById(e.target.hash.slice(1));
+    if (target) {
+      e.preventDefault();
+      window.scrollTo({
+        top: target.offsetTop - NAV_OFFSET,
+        behavior: 'smooth'
+      });
     }
   }
-
-  document.getElementById("copy-all").onclick = () => {
-    let all = [];
-    for (const items of Object.values(sections)) {
-      items.forEach(([cmd]) => all.push(cmd));
-    }
-    copyText(all.join("\n"));
-  };
-
-  // Render all sections and commands
-  for (const [section, commands] of Object.entries(sections)) {
-    const h2 = document.createElement("h2");
-    h2.textContent = section;
-    container.appendChild(h2);
-
-    commands.forEach(([cmd, label]) => {
-      container.appendChild(createRow(cmd, label));
-    });
-  }
+});
 </script>
-
 </body>
 </html>
